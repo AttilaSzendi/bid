@@ -56808,6 +56808,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -56822,13 +56826,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        this.$nextTick(function () {
-            axios.get('/bids/' + _this.product.id).then(function (response) {
-                _this.bids = response.data.bids;
-                _this.highestBid = response.data.highestBid;
-            }).catch(function (error) {
-                return console.log(error);
-            });
+        axios.get('/bids/' + this.product.id).then(function (response) {
+            _this.bids = response.data.bids;
+            _this.highestBid = response.data.highestBid;
+        }).catch(function (error) {
+            return console.log(error);
         });
 
         // public channel
@@ -56846,12 +56848,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //     });
 
         // private channel with better security
-        Echo.private('bid-channel.' + this.product.id).listen('BidHasCreated', function (_ref) {
-            var bid = _ref.bid;
+        // Echo.private(`bid-channel.${this.product.id}`)
+        //     .listen('BidHasCreated', ({bid}) => {
+        //         this.bids.push(bid);
+        //         this.highestBid = bid.amount;
+        //     });
 
-            _this.bids.push(bid);
-            _this.highestBid = bid.amount;
-        });
+
+        // Echo.join(`bid-channel.${this.product.id}`)
+        //     .listen('BidHasCreated', ({bid}) => {
+        //         this.bids.push(bid);
+        //         this.highestBid = bid.amount;
+        //     }).here((users) => {
+        //     console.log(users);
+        // }).joining((user) => {
+        //     console.log(user.name);
+        // }).leaving((user) => {
+        //     console.log(user.name);
+        // }).listenForWhisper('typing', () => console.log('without touching the server'));
     },
 
 
@@ -56864,6 +56878,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        whisper: function whisper() {
+            // Echo.join(`bid-channel.${this.product.id}`)
+            //     .whisper('typing');
+        },
         bid: function bid() {
             var _this2 = this;
 
@@ -56937,7 +56955,13 @@ var render = function() {
                   "\n                        licitálok...\n                    "
                 )
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.whisper } }, [
+              _vm._v(
+                "\n                        whisper...\n                    "
+              )
+            ])
           ])
         ])
       ]),

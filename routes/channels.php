@@ -13,10 +13,20 @@
 
 
 // the private channel needs logged in users
-Broadcast::channel('bid-channel.{id}', function ($user, $id) {
-    if($user->id === 3) {
-        return false;
-    }
+//Broadcast::channel('bid-channel.{id}', function ($user, $id) {
+//    if($user->id === 3) {
+//        return false;
+//    }
+//
+//    return true;
+//});
 
-    return true;
-});
+
+//presence channel
+//Broadcast::channel('bid-channel.{id}', function ($user, $id) {
+//    if($user->id === 3) {
+//        return false;
+//    }
+//
+//    return ['id' => $user->id, 'name' => $user->name];
+//});

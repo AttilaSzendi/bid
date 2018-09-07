@@ -17,6 +17,10 @@
                         <button @click="bid" :disabled="! bidButtonActive">
                             licitálok...
                         </button>
+
+                        <button @click="whisper">
+                            whisper...
+                        </button>
                     </div>
                 </div>
             </div>
@@ -46,14 +50,12 @@
 
         mounted() {
 
-            this.$nextTick(() => {
-                axios.get(`/bids/${this.product.id}`)
-                    .then(response => {
-                        this.bids = response.data.bids;
-                        this.highestBid = response.data.highestBid;
-                    })
-                    .catch(error => console.log(error));
-            });
+            axios.get(`/bids/${this.product.id}`)
+                .then(response => {
+                    this.bids = response.data.bids;
+                    this.highestBid = response.data.highestBid;
+                })
+                .catch(error => console.log(error));
 
 
             // public channel
@@ -71,11 +73,25 @@
             //     });
 
             // private channel with better security
-            Echo.private(`bid-channel.${this.product.id}`)
-                .listen('BidHasCreated', ({bid}) => {
-                    this.bids.push(bid);
-                    this.highestBid = bid.amount;
-                });
+            // Echo.private(`bid-channel.${this.product.id}`)
+            //     .listen('BidHasCreated', ({bid}) => {
+            //         this.bids.push(bid);
+            //         this.highestBid = bid.amount;
+            //     });
+
+
+
+            // Echo.join(`bid-channel.${this.product.id}`)
+            //     .listen('BidHasCreated', ({bid}) => {
+            //         this.bids.push(bid);
+            //         this.highestBid = bid.amount;
+            //     }).here((users) => {
+            //     console.log(users);
+            // }).joining((user) => {
+            //     console.log(user.name);
+            // }).leaving((user) => {
+            //     console.log(user.name);
+            // }).listenForWhisper('typing', () => console.log('without touching the server'));
         },
 
         data: function(){
@@ -87,6 +103,12 @@
         },
 
         methods: {
+
+            whisper(){
+                // Echo.join(`bid-channel.${this.product.id}`)
+                //     .whisper('typing');
+            },
+
             bid(){
 
                 this.bidButtonActive = false;

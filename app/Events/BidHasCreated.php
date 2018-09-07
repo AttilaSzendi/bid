@@ -38,6 +38,9 @@ class BidHasCreated implements ShouldBroadcast
 //        return new Channel('bid-channel.'. $this->productId);
 
 //        private channel
-        return new PrivateChannel('bid-channel.'. $this->productId);
+//        return new PrivateChannel('bid-channel.'. $this->productId);
+
+//        presence channel
+//        return new PresenceChannel('bid-channel.'. $this->productId);
     }
 }
