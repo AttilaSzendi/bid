@@ -12,7 +12,7 @@
 */
 
 
-// the private chanel needs logged in users
+// the private channel needs logged in users
 Broadcast::channel('bid-channel.{id}', function ($user, $id) {
     if($user->id === 3) {
         return false;

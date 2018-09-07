@@ -1,5 +1,5 @@
 {
-	"authHost": "http://licit.test",
+	"authHost": "http://bid.test",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
